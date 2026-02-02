@@ -10,7 +10,7 @@ The academy focuses on moving beyond simple AI usage to building **Autonomous Ag
 **Key Concept:** "Kyndryl Agentic Framework" (KAF) - The operational cookbook for the course.
 
 ## 2. Logistics & Platforms
-*   **Hub:** `Kindrio AI online` (Education Portal - registration required).
+*   **Hub:** `kyndryl.online` (Education Portal - registration required).
 *   **Communication:** MS Teams Channel ("General AI Academy").
 *   **Materials:** OneDrive (Daily content), SharePoint (Long-term archive).
 *   **AI Tutors:** Custom AI agents will be provided to assist with exercises and learning.
