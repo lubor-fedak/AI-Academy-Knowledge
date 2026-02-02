@@ -1,0 +1,123 @@
+# Test scenarios for Computer Use Agent
+
+test_scenarios:
+  # Basic functionality tests
+  - name: "Normal password reset"
+    type: password_reset
+    input:
+      user_email: "jsmith@company.com"
+    expected:
+      status: success
+      has_temp_password: true
+
+  - name: "Password reset with valid email"
+    type: password_reset
+    input:
+      user_email: "valid.user@company.com"
+    expected:
+      status: success
+
+  # Governance tests
+  - name: "Blocked action - delete attempt"
+    type: raw_action
+    input:
+      action:
+        type: click
+        target: delete_user_button
+    expected:
+      status: blocked
+      reason_contains: "not in allowed"
+
+  - name: "Blocked typing - SQL injection"
+    type: raw_action
+    input:
+      action:
+        type: type
+        text: "'; DROP TABLE users; --"
+    expected:
+      status: blocked
+      reason_contains: "blocked patterns"
+
+  - name: "Blocked typing - admin command"
+    type: raw_action
+    input:
+      action:
+        type: type
+        text: "sudo rm -rf /"
+    expected:
+      status: blocked
+      reason_contains: "blocked patterns"
+
+  # Rate limit tests
+  - name: "Rate limit - 15 actions in 1 minute"
+    type: rate_limit_test
+    input:
+      action_count: 15
+      time_window_seconds: 60
+    expected:
+      blocked_after: 10
+      reason: "Rate limit exceeded"
+
+  # Circuit breaker tests
+  - name: "Circuit breaker - opens after 3 failures"
+    type: circuit_breaker_test
+    input:
+      failure_count: 3
+    expected:
+      circuit_state: open
+      subsequent_blocked: true
+
+  # Context validation tests
+  - name: "Wrong context - password reset on home page"
+    type: context_test
+    input:
+      action:
+        type: click
+        target: reset_password_button
+      current_page: home
+      expected_page: user_management
+    expected:
+      status: blocked
+      reason_contains: "Invalid context"
+
+  # Edge cases
+  - name: "Empty user email"
+    type: password_reset
+    input:
+      user_email: ""
+    expected:
+      status: error
+      reason_contains: "invalid email"
+
+  - name: "User not found"
+    type: password_reset
+    input:
+      user_email: "nonexistent@company.com"
+    expected:
+      status: error
+      reason_contains: "user not found"
+
+  # Timeout tests
+  - name: "Action timeout"
+    type: timeout_test
+    input:
+      action:
+        type: click
+        target: slow_loading_element
+      timeout_seconds: 5
+    expected:
+      status: timeout
+      action_cancelled: true
+
+  # Audit logging tests
+  - name: "Verify all actions logged"
+    type: audit_test
+    input:
+      actions:
+        - {type: click, target: user_management_menu}
+        - {type: type, text: "test@example.com"}
+        - {type: click, target: search_box}
+    expected:
+      log_count: 3
+      all_actions_logged: true
+      timestamps_present: true

@@ -1,0 +1,375 @@
+# Example Specification: Sentiment Analysis API
+# This is a complete, production-ready specification
+
+metadata:
+  version: "1.0.0"
+  author: "AI Academy"
+  last_updated: "2026-02-01"
+  status: "approved"
+
+feature:
+  name: "Customer Feedback Sentiment Analysis API"
+  description: |
+    A REST API that analyzes customer feedback text and returns
+    sentiment classification, confidence scores, key influential
+    phrases, and suggested response categories. Designed for
+    integration with customer support systems.
+
+requirements:
+  functional:
+    - requirement_id: "FR-001"
+      name: "Single feedback analysis"
+      description: |
+        Accept a single piece of customer feedback text and return
+        a complete sentiment analysis including classification,
+        confidence, key phrases, and response category.
+      acceptance_criteria:
+        - "Given valid feedback text (1-5000 characters), returns sentiment analysis"
+        - "Sentiment is one of: positive, negative, neutral, mixed"
+        - "Confidence is a float between 0.0 and 1.0"
+        - "Key phrases is a list of 1-10 strings"
+        - "Response category is one of predefined categories"
+        - "Response time < 500ms for texts under 1000 characters"
+
+    - requirement_id: "FR-002"
+      name: "Batch analysis"
+      description: |
+        Accept multiple feedback items in a single request and return
+        individual analysis for each, plus aggregate statistics.
+      acceptance_criteria:
+        - "Accepts array of 1-100 feedback items"
+        - "Returns individual analysis for each item"
+        - "Returns aggregate: overall_sentiment, average_confidence"
+        - "Processing is parallelized for performance"
+        - "Partial failures don't fail entire batch"
+
+    - requirement_id: "FR-003"
+      name: "Language detection"
+      description: |
+        Automatically detect the language of feedback and analyze
+        in the appropriate language context.
+      acceptance_criteria:
+        - "Detects language from text content"
+        - "Supports: English, Spanish, French, German, Portuguese"
+        - "Returns detected_language in response"
+        - "Returns error for unsupported languages"
+
+    - requirement_id: "FR-004"
+      name: "Custom categories"
+      description: |
+        Allow clients to provide custom response categories that
+        override the default categories.
+      acceptance_criteria:
+        - "Accepts optional custom_categories in request"
+        - "Categories must be 2-20 items"
+        - "Each category is a string 1-50 characters"
+        - "Returns suggested_category from custom list"
+
+  non_functional:
+    - requirement_id: "NFR-001"
+      name: "Performance"
+      description: "API response time requirements"
+      metrics:
+        - "p50 response time < 200ms"
+        - "p99 response time < 500ms"
+        - "Throughput > 100 requests/second"
+
+    - requirement_id: "NFR-002"
+      name: "Availability"
+      description: "Uptime and reliability requirements"
+      metrics:
+        - "99.9% uptime"
+        - "Graceful degradation on model failure"
+        - "Health check endpoint available"
+
+    - requirement_id: "NFR-003"
+      name: "Security"
+      description: "Security requirements"
+      metrics:
+        - "Input sanitization for all text fields"
+        - "Rate limiting: 1000 requests/minute per API key"
+        - "No PII stored in logs"
+
+interfaces:
+  api:
+    base_url: "/api/v1"
+    authentication: "Bearer token in Authorization header"
+
+    endpoints:
+      - path: "/analyze"
+        method: "POST"
+        description: "Analyze single feedback item"
+        request:
+          content_type: "application/json"
+          body:
+            type: object
+            required: ["text"]
+            properties:
+              text:
+                type: string
+                minLength: 1
+                maxLength: 5000
+                description: "The feedback text to analyze"
+              custom_categories:
+                type: array
+                items:
+                  type: string
+                  minLength: 1
+                  maxLength: 50
+                minItems: 2
+                maxItems: 20
+                description: "Optional custom response categories"
+        response:
+          success:
+            status_code: 200
+            body:
+              type: object
+              properties:
+                sentiment:
+                  type: string
+                  enum: ["positive", "negative", "neutral", "mixed"]
+                confidence:
+                  type: number
+                  minimum: 0.0
+                  maximum: 1.0
+                key_phrases:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 1
+                  maxItems: 10
+                suggested_category:
+                  type: string
+                detected_language:
+                  type: string
+                processing_time_ms:
+                  type: integer
+          errors:
+            - status_code: 400
+              condition: "Invalid input (empty text, too long, etc.)"
+              body:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: string
+            - status_code: 422
+              condition: "Unsupported language detected"
+              body:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  detected_language:
+                    type: string
+
+      - path: "/analyze/batch"
+        method: "POST"
+        description: "Analyze multiple feedback items"
+        request:
+          content_type: "application/json"
+          body:
+            type: object
+            required: ["items"]
+            properties:
+              items:
+                type: array
+                items:
+                  type: object
+                  required: ["id", "text"]
+                  properties:
+                    id:
+                      type: string
+                    text:
+                      type: string
+                minItems: 1
+                maxItems: 100
+        response:
+          success:
+            status_code: 200
+            body:
+              type: object
+              properties:
+                results:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      status:
+                        type: string
+                        enum: ["success", "error"]
+                      analysis:
+                        type: object
+                        description: "Same as single analysis response"
+                      error:
+                        type: string
+                aggregate:
+                  type: object
+                  properties:
+                    total:
+                      type: integer
+                    successful:
+                      type: integer
+                    failed:
+                      type: integer
+                    overall_sentiment:
+                      type: string
+                    average_confidence:
+                      type: number
+
+      - path: "/health"
+        method: "GET"
+        description: "Health check endpoint"
+        response:
+          success:
+            status_code: 200
+            body:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: ["healthy", "degraded"]
+                model_loaded:
+                  type: boolean
+                version:
+                  type: string
+
+examples:
+  - name: "Positive feedback - English"
+    endpoint: "/analyze"
+    input:
+      text: "Absolutely love this product! Fast delivery and amazing quality. Will definitely buy again."
+    expected_output:
+      sentiment: "positive"
+      confidence: 0.94
+      key_phrases:
+        - "absolutely love"
+        - "fast delivery"
+        - "amazing quality"
+        - "buy again"
+      suggested_category: "promoter"
+      detected_language: "en"
+
+  - name: "Negative feedback - English"
+    endpoint: "/analyze"
+    input:
+      text: "Terrible experience. Product arrived broken and customer service was unhelpful. Never ordering again."
+    expected_output:
+      sentiment: "negative"
+      confidence: 0.91
+      key_phrases:
+        - "terrible experience"
+        - "arrived broken"
+        - "unhelpful"
+        - "never ordering again"
+      suggested_category: "complaint_product_quality"
+      detected_language: "en"
+
+  - name: "Mixed feedback - English"
+    endpoint: "/analyze"
+    input:
+      text: "The product quality is excellent but shipping took forever. Would recommend if you're not in a hurry."
+    expected_output:
+      sentiment: "mixed"
+      confidence: 0.78
+      key_phrases:
+        - "quality is excellent"
+        - "shipping took forever"
+        - "would recommend"
+      suggested_category: "feedback_shipping"
+      detected_language: "en"
+
+  - name: "Neutral feedback - English"
+    endpoint: "/analyze"
+    input:
+      text: "Product arrived as described. It works. Nothing special but nothing wrong either."
+    expected_output:
+      sentiment: "neutral"
+      confidence: 0.82
+      key_phrases:
+        - "as described"
+        - "it works"
+        - "nothing special"
+      suggested_category: "passive_customer"
+      detected_language: "en"
+
+  - name: "Spanish feedback"
+    endpoint: "/analyze"
+    input:
+      text: "Excelente producto! Muy contento con mi compra."
+    expected_output:
+      sentiment: "positive"
+      confidence: 0.89
+      key_phrases:
+        - "excelente producto"
+        - "muy contento"
+      suggested_category: "promoter"
+      detected_language: "es"
+
+  - name: "Batch analysis"
+    endpoint: "/analyze/batch"
+    input:
+      items:
+        - id: "fb-001"
+          text: "Great product!"
+        - id: "fb-002"
+          text: "Terrible service."
+        - id: "fb-003"
+          text: "It's okay I guess."
+    expected_output:
+      results:
+        - id: "fb-001"
+          status: "success"
+          analysis:
+            sentiment: "positive"
+        - id: "fb-002"
+          status: "success"
+          analysis:
+            sentiment: "negative"
+        - id: "fb-003"
+          status: "success"
+          analysis:
+            sentiment: "neutral"
+      aggregate:
+        total: 3
+        successful: 3
+        failed: 0
+        overall_sentiment: "mixed"
+        average_confidence: 0.85
+
+constraints:
+  technical:
+    - "Python 3.11 or higher"
+    - "FastAPI framework"
+    - "Pydantic v2 for validation"
+    - "No GPU required (CPU inference only)"
+    - "Stateless - no session storage"
+    - "Docker-compatible"
+
+  dependencies:
+    allowed:
+      - "fastapi"
+      - "uvicorn"
+      - "pydantic"
+      - "transformers"
+      - "torch (CPU only)"
+      - "langdetect"
+    prohibited:
+      - "No external API calls for inference"
+      - "No cloud-specific SDKs"
+
+default_categories:
+  - "promoter"
+  - "passive_customer"
+  - "detractor"
+  - "complaint_product_quality"
+  - "complaint_shipping"
+  - "complaint_service"
+  - "feedback_positive"
+  - "feedback_shipping"
+  - "feedback_suggestion"
+  - "question_product"
+  - "question_order"

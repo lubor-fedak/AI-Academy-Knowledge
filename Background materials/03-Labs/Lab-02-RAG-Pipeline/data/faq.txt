@@ -1,0 +1,22 @@
+Frequently Asked Questions
+
+Q: How do I reset my password?
+A: Visit the IT portal at https://it.kyndryl.com and click "Reset Password". You'll receive an email with instructions.
+
+Q: Who do I contact for laptop issues?
+A: Contact the IT helpdesk at helpdesk@kyndryl.com or call +420 123 456 789.
+
+Q: How do I book a meeting room?
+A: Use the Outlook calendar to find and book available rooms. Conference rooms can be booked up to 2 weeks in advance.
+
+Q: What is the guest WiFi password?
+A: Guest WiFi network is "Kyndryl-Guest". Password changes monthly and is posted in reception.
+
+Q: How do I submit expenses?
+A: Use the Concur app to submit expense reports. All receipts must be attached. Reports are processed within 5 business days.
+
+Q: Where can I find the company org chart?
+A: The org chart is available on the intranet under "Our Company" > "Organization".
+
+Q: How do I request time off?
+A: Submit leave requests through Workday at least 2 weeks before the planned absence.

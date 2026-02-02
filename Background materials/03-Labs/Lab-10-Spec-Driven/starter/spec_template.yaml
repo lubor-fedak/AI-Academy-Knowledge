@@ -1,0 +1,106 @@
+# Specification Template
+# Fill in this template to define your feature
+
+metadata:
+  version: "1.0.0"
+  author: "YOUR NAME"
+  last_updated: "2026-02-XX"
+  status: "draft"
+
+feature:
+  name: "YOUR FEATURE NAME"
+  description: |
+    A comprehensive description of what this feature does.
+    Include the business context and why it's needed.
+
+requirements:
+  functional:
+    - requirement_id: "FR-001"
+      name: "Primary functionality"
+      description: |
+        Detailed description of what the system must do.
+        Be specific about inputs, processing, and outputs.
+      acceptance_criteria:
+        - "Given X, when Y, then Z"
+        - "Given A, when B, then C"
+
+    - requirement_id: "FR-002"
+      name: "Secondary functionality"
+      description: |
+        # Add more requirements as needed
+
+  non_functional:
+    - requirement_id: "NFR-001"
+      name: "Performance"
+      description: "Response time and throughput requirements"
+      metrics:
+        - "p99 response time < Xms"
+        - "Throughput > X requests/second"
+
+    - requirement_id: "NFR-002"
+      name: "Security"
+      description: "Security requirements"
+      metrics:
+        - "Input validation"
+        - "Rate limiting"
+
+interfaces:
+  api:
+    base_url: "/api/v1"
+
+    endpoints:
+      - path: "/your-endpoint"
+        method: "POST"
+        description: "What this endpoint does"
+        request:
+          content_type: "application/json"
+          body:
+            type: object
+            required: ["field1"]
+            properties:
+              field1:
+                type: string
+                description: "Description of field"
+        response:
+          success:
+            status_code: 200
+            body:
+              type: object
+              properties:
+                result:
+                  type: string
+          errors:
+            - status_code: 400
+              condition: "Invalid input"
+              body:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+examples:
+  - name: "Happy path example"
+    endpoint: "/your-endpoint"
+    input:
+      field1: "example value"
+    expected_output:
+      result: "expected result"
+
+  - name: "Edge case example"
+    endpoint: "/your-endpoint"
+    input:
+      field1: "edge case value"
+    expected_output:
+      result: "edge case result"
+
+constraints:
+  technical:
+    - "Python 3.11+"
+    - "FastAPI framework"
+    - "Pydantic v2"
+
+  dependencies:
+    allowed:
+      - "List allowed libraries"
+    prohibited:
+      - "List prohibited approaches"

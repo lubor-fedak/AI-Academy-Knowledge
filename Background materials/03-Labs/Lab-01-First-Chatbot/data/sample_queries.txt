@@ -1,0 +1,23 @@
+# Sample queries to test your chatbot
+
+## Basic Questions
+What is AI Academy?
+Who created you?
+What can you help me with?
+
+## Multi-turn Conversation
+My name is Alex.
+What is my name?
+Tell me a joke.
+Explain that joke.
+
+## Edge Cases
+[empty - just press enter]
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+🎉🚀💡
+<script>alert('test')</script>
+
+## Context Retention
+I'm working on a Python project.
+What language am I using?
+Can you help me debug it?
