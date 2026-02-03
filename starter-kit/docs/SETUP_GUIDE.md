@@ -1,78 +1,78 @@
-# 📖 Detailný Setup Guide
+# 📖 Detailed Setup Guide
 
-Kompletný návod pre účastníkov AI Academy.
-
----
-
-## Predpoklady
-
-- Internetové pripojenie
-- Webový prehliadač (Chrome/Firefox/Edge)
-- Základná znalosť Python (nemusíš byť expert)
+Complete guide for AI Academy participants.
 
 ---
 
-## Krok 1: Google Account (2 min)
+## Prerequisites
 
-Ak už máš Gmail, tento krok preskoč.
-
-1. Choď na https://accounts.google.com/signup
-2. Vyplň údaje
-3. Potvrď telefónne číslo
-4. Hotovo ✅
+- Internet connection
+- Web browser (Chrome/Firefox/Edge)
+- Basic Python knowledge (you don't need to be an expert)
 
 ---
 
-## Krok 2: Google AI Studio - API Key (5 min)
+## Step 1: Google Account (2 min)
 
-### 2.1 Prístup
-1. Otvor https://aistudio.google.com
-2. Klikni "Sign in with Google"
-3. Použi svoj Google účet
-4. Akceptuj Terms of Service
+If you already have Gmail, skip this step.
 
-### 2.2 Vytvorenie API kľúča
-1. V ľavom menu klikni **"Get API key"**
-2. Klikni **"Create API key"**
-3. Vyber **"Create API key in new project"**
-4. Počkaj pár sekúnd
-5. **Skopíruj API kľúč** (vyzerá ako `AIzaSy...`)
-
-### 2.3 Ulož API kľúč bezpečne
-- Ulož do password managera
-- ALEBO do súkromného dokumentu
-- **NIKDY** nedávaj do verejného kódu!
+1. Go to https://accounts.google.com/signup
+2. Fill in the details
+3. Verify your phone number
+4. Done ✅
 
 ---
 
-## Krok 3: Google Colab (3 min)
+## Step 2: Google AI Studio - API Key (5 min)
 
-### 3.1 Otvorenie notebooku
+### 2.1 Access
+1. Open https://aistudio.google.com
+2. Click "Sign in with Google"
+3. Use your Google account
+4. Accept Terms of Service
 
-**Možnosť A: Priamy link**
-- Klikni na "Open in Colab" badge v README
+### 2.2 Creating an API Key
+1. In the left menu, click **"Get API key"**
+2. Click **"Create API key"**
+3. Select **"Create API key in new project"**
+4. Wait a few seconds
+5. **Copy the API key** (looks like `AIzaSy...`)
 
-**Možnosť B: Manuálne**
-1. Choď na https://colab.research.google.com
+### 2.3 Store API Key Securely
+- Save to password manager
+- OR to a private document
+- **NEVER** put in public code!
+
+---
+
+## Step 3: Google Colab (3 min)
+
+### 3.1 Opening a Notebook
+
+**Option A: Direct link**
+- Click the "Open in Colab" badge in README
+
+**Option B: Manual**
+1. Go to https://colab.research.google.com
 2. File → Open notebook
 3. GitHub tab
-4. Zadaj URL repozitára
-5. Vyber notebook
+4. Enter the repository URL
+5. Select notebook
 
-### 3.2 Nastavenie API kľúča v Colab
+### 3.2 Setting up API Key in Colab
 
-1. V ľavom paneli nájdi ikonu 🔑 (Secrets)
-2. Klikni na ňu
-3. Klikni **"Add new secret"**
-4. Vyplň:
+1. In the left panel, find the 🔑 icon (Secrets)
+2. Click on it
+3. Click **"Add new secret"**
+4. Fill in:
    - **Name:** `GOOGLE_API_KEY`
-   - **Value:** *vlož svoj API kľúč*
-5. Klikni na toggle **"Notebook access"** → zapni ho
-6. Hotovo ✅
+   - **Value:** *paste your API key*
+5. Click the **"Notebook access"** toggle → turn it on
+6. Done ✅
 
-### 3.3 Verifikácia
+### 3.3 Verification
 
-Spusti túto bunku v notebooku:
+Run this cell in the notebook:
 
 ```python
 from google.colab import userdata
@@ -80,29 +80,29 @@ key = userdata.get('GOOGLE_API_KEY')
 print(f"✅ API key loaded: {key[:10]}...")
 ```
 
-Ak vidíš chybu, skontroluj:
-- Je secret pomenovaný presne `GOOGLE_API_KEY`?
-- Je toggle "Notebook access" zapnutý?
+If you see an error, check:
+- Is the secret named exactly `GOOGLE_API_KEY`?
+- Is the "Notebook access" toggle on?
 
 ---
 
-## Krok 4: HuggingFace Account (voliteľné, 3 min)
+## Step 4: HuggingFace Account (optional, 3 min)
 
-Pre deployment agentov.
+For deploying agents.
 
-### 4.1 Registrácia
-1. Choď na https://huggingface.co/join
-2. Vyplň: Username, Email, Password
-3. Klikni "Sign Up"
-4. Potvrď email
+### 4.1 Registration
+1. Go to https://huggingface.co/join
+2. Fill in: Username, Email, Password
+3. Click "Sign Up"
+4. Confirm email
 
 ### 4.2 Access Token
-1. Klikni na avatar → Settings
-2. V ľavom menu: Access Tokens
-3. Klikni "Create new token"
+1. Click avatar → Settings
+2. In left menu: Access Tokens
+3. Click "Create new token"
 4. Name: `ai-academy`
 5. Role: `write`
-6. Skopíruj token
+6. Copy token
 
 ---
 
@@ -110,73 +110,73 @@ Pre deployment agentov.
 
 ### "API key not valid"
 
-**Príčina:** Nesprávny alebo expirovaný kľúč
+**Cause:** Incorrect or expired key
 
-**Riešenie:**
-1. Choď na https://aistudio.google.com
+**Solution:**
+1. Go to https://aistudio.google.com
 2. Get API key → Create new key
-3. Aktualizuj v Colab Secrets
+3. Update in Colab Secrets
 
 ### "429 Too Many Requests"
 
-**Príčina:** Prekročený rate limit
+**Cause:** Rate limit exceeded
 
-**Riešenie:**
-- Počkaj 60 sekúnd
-- Použi `gemini-2.0-flash` namiesto `gemini-2.5-pro`
+**Solution:**
+- Wait 60 seconds
+- Use `gemini-2.0-flash` instead of `gemini-2.5-pro`
 
 ### "ModuleNotFoundError"
 
-**Príčina:** Knižnica nie je nainštalovaná
+**Cause:** Library not installed
 
-**Riešenie:**
+**Solution:**
 ```python
 !pip install google-generativeai smolagents litellm
 ```
 
-### Colab sa zasekol
+### Colab is stuck
 
-**Riešenie:**
+**Solution:**
 1. Runtime → Restart runtime
-2. Spusti setup bunku znova
-3. Ak nepomôže: Runtime → Disconnect and delete runtime
+2. Run setup cell again
+3. If that doesn't help: Runtime → Disconnect and delete runtime
 
-### GPU nie je dostupné
+### GPU not available
 
-**Príčina:** Vysoký dopyt, free tier vyčerpaný
+**Cause:** High demand, free tier exhausted
 
-**Riešenie:**
-- Skús neskôr
-- Použi CPU runtime (pomalšie ale funguje)
-- Alternatíva: Kaggle notebooks
+**Solution:**
+- Try later
+- Use CPU runtime (slower but works)
+- Alternative: Kaggle notebooks
 
 ---
 
-## Tips pre efektívnu prácu
+## Tips for Effective Work
 
-### Ukladanie
-- **Ctrl+S** = uložiť
-- Colab ukladá automaticky, ale radšej ukladaj manuálne
+### Saving
+- **Ctrl+S** = save
+- Colab saves automatically, but better to save manually
 
 ### Rate limits
-- Gemini Flash: 1,500 req/deň (používaj tento!)
-- Gemini Pro: 50 req/deň
+- Gemini Flash: 1,500 req/day (use this!)
+- Gemini Pro: 50 req/day
 
 ### GPU
-- Free GPU: ~4 hodiny/deň
-- Používaj len keď potrebuješ
-- Pre väčšinu labov stačí CPU
+- Free GPU: ~4 hours/day
+- Use only when needed
+- For most labs, CPU is sufficient
 
 ### Export
 - File → Download → Download .ipynb
-- Môžeš aj priamo do GitHub
+- You can also directly to GitHub
 
 ---
 
-## Užitočné linky
+## Useful Links
 
-| Čo | URL |
-|----|-----|
+| What | URL |
+|------|-----|
 | Google AI Studio | https://aistudio.google.com |
 | Google Colab | https://colab.research.google.com |
 | HuggingFace | https://huggingface.co |
@@ -185,7 +185,7 @@ Pre deployment agentov.
 
 ---
 
-## Kontakt
+## Contact
 
 - 💬 Teams: `#ai-academy-help`
 - 📧 Email: ai-academy@kyndryl.com
