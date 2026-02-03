@@ -1,60 +1,60 @@
 # 🚀 AI Academy - Starter Kit
 
-**Všetko čo potrebuješ na začiatok s Agentic AI. Zadarmo.**
+**Everything you need to start with Agentic AI. For free.**
 
 ```
-⏱️ Setup: 15 minút
-💰 Cena: $0
-🎯 Výsledok: Funkčný AI agent
+⏱️ Setup: 15 minutes
+💰 Cost: $0
+🎯 Result: Working AI agent
 ```
 
 ---
 
-## 🏃 Quick Start (3 kroky)
+## 🏃 Quick Start (3 steps)
 
-### Krok 1: Vytvor účty (5 min)
+### Step 1: Create accounts (5 min)
 
-| Služba | Link | Čo potrebuješ |
-|--------|------|---------------|
+| Service | Link | What you need |
+|---------|------|---------------|
 | Google | [aistudio.google.com](https://aistudio.google.com) | → Get API Key → Create |
 | HuggingFace | [huggingface.co/join](https://huggingface.co/join) | → Settings → Access Tokens |
 
-### Krok 2: Otvor Setup Notebook (1 min)
+### Step 2: Open Setup Notebook (1 min)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/00_Setup.ipynb)
 
-> ☝️ Klikni na badge alebo otvor `notebooks/00_Setup.ipynb` v Google Colab
+> ☝️ Click the badge or open `notebooks/00_Setup.ipynb` in Google Colab
 
-### Krok 3: Pridaj API Key (2 min)
+### Step 3: Add API Key (2 min)
 
-1. V Colab klikni 🔑 (Secrets) v ľavom paneli
+1. In Colab, click 🔑 (Secrets) in the left panel
 2. **Add new secret:**
    - Name: `GOOGLE_API_KEY`
-   - Value: *tvoj API kľúč z AI Studio*
+   - Value: *your API key from AI Studio*
 3. Toggle "Notebook access" → **ON**
-4. Spusti prvú bunku → Hotovo! ✅
+4. Run the first cell → Done! ✅
 
 ---
 
-## 📚 Notebooky
+## 📚 Notebooks
 
-| # | Notebook | Popis | Colab |
-|---|----------|-------|-------|
-| 00 | [Setup](notebooks/00_Setup.ipynb) | Konfigurácia a test | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/00_Setup.ipynb) |
-| 01 | [First Agent](notebooks/01_First_Agent.ipynb) | Základný agent | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/01_First_Agent.ipynb) |
-| 02 | [Tools Agent](notebooks/02_Tools_Agent.ipynb) | Agent s nástrojmi | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/02_Tools_Agent.ipynb) |
+| # | Notebook | Description | Colab |
+|---|----------|-------------|-------|
+| 00 | [Setup](notebooks/00_Setup.ipynb) | Configuration and test | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/00_Setup.ipynb) |
+| 01 | [First Agent](notebooks/01_First_Agent.ipynb) | Basic agent | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/01_First_Agent.ipynb) |
+| 02 | [Tools Agent](notebooks/02_Tools_Agent.ipynb) | Agent with tools | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/02_Tools_Agent.ipynb) |
 | 03 | [RAG Agent](notebooks/03_RAG_Agent.ipynb) | Retrieval-Augmented Generation | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/03_RAG_Agent.ipynb) |
-| 04 | [Multi-Agent](notebooks/04_Multi_Agent.ipynb) | Viac agentov spolupracuje | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/04_Multi_Agent.ipynb) |
+| 04 | [Multi-Agent](notebooks/04_Multi_Agent.ipynb) | Multiple agents working together | [![Open](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lubor-fedak/AI-Academy-Knowledge/blob/main/starter-kit/notebooks/04_Multi_Agent.ipynb) |
 
 ---
 
-## 🆓 Free Tier Limity
+## 🆓 Free Tier Limits
 
-| Služba | Limit | Poznámka |
-|--------|-------|----------|
-| Gemini Flash | 1,500 req/deň | Hlavný model |
-| Gemini Pro | 50 req/deň | Pre komplexné úlohy |
-| Colab GPU | ~4h/deň | Voliteľné |
+| Service | Limit | Notes |
+|---------|-------|-------|
+| Gemini Flash | 1,500 req/day | Main model |
+| Gemini Pro | 50 req/day | For complex tasks |
+| Colab GPU | ~4h/day | Optional |
 | HF Spaces | Unlimited | CPU hosting |
 
 ---
@@ -64,42 +64,42 @@
 <details>
 <summary><b>❌ "API key not valid"</b></summary>
 
-1. Choď na [aistudio.google.com](https://aistudio.google.com)
+1. Go to [aistudio.google.com](https://aistudio.google.com)
 2. Get API Key → Create new key
-3. Skopíruj a aktualizuj v Colab Secrets
+3. Copy and update in Colab Secrets
 </details>
 
 <details>
 <summary><b>❌ "429 Too Many Requests"</b></summary>
 
-- Počkaj 60 sekúnd
-- Alebo použi `gemini-2.0-flash` namiesto `gemini-2.5-pro`
+- Wait 60 seconds
+- Or use `gemini-2.0-flash` instead of `gemini-2.5-pro`
 </details>
 
 <details>
 <summary><b>❌ "Module not found"</b></summary>
 
-Spusti v novej bunke:
+Run in a new cell:
 ```python
 !pip install google-generativeai smolagents litellm
 ```
 </details>
 
 <details>
-<summary><b>❌ Colab sa zasekol</b></summary>
+<summary><b>❌ Colab is stuck</b></summary>
 
-Runtime → Restart runtime → Spusti setup bunku znova
+Runtime → Restart runtime → Run setup cell again
 </details>
 
 ---
 
-## 📁 Štruktúra Repozitára
+## 📁 Repository Structure
 
 ```
-ai-academy-starter/
-├── README.md              # Tento súbor
+starter-kit/
+├── README.md              # This file
 ├── notebooks/
-│   ├── 00_Setup.ipynb     # Setup a test
+│   ├── 00_Setup.ipynb     # Setup and test
 │   ├── 01_First_Agent.ipynb
 │   ├── 02_Tools_Agent.ipynb
 │   ├── 03_RAG_Agent.ipynb
@@ -108,25 +108,25 @@ ai-academy-starter/
 │   ├── app.py             # HuggingFace Spaces template
 │   └── requirements.txt
 └── docs/
-    └── SETUP_GUIDE.md     # Detailný setup guide
+    └── SETUP_GUIDE.md     # Detailed setup guide
 ```
 
 ---
 
-## 🔗 Užitočné Linky
+## 🔗 Useful Links
 
-- [Google AI Studio](https://aistudio.google.com) - API kľúče
-- [Google Colab](https://colab.research.google.com) - Notebooky
+- [Google AI Studio](https://aistudio.google.com) - API keys
+- [Google Colab](https://colab.research.google.com) - Notebooks
 - [HuggingFace Spaces](https://huggingface.co/spaces) - Deployment
 - [smolagents Docs](https://huggingface.co/docs/smolagents) - Framework
 
 ---
 
-## 📞 Podpora
+## 📞 Support
 
 - 💬 Teams: `#ai-academy-help`
 - 📧 Email: ai-academy@kyndryl.com
-- 🕐 Office Hours: [kalendár]
+- 🕐 Office Hours: [calendar]
 
 ---
 
