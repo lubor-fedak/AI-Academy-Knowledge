@@ -1,13 +1,13 @@
 """
 AI Academy - Agent Demo App
 ============================
-Template pre deployment na HuggingFace Spaces.
+Template for deployment to HuggingFace Spaces.
 
-Použitie:
-1. Vytvor nový Space na huggingface.co/spaces
-2. Nahraj tento súbor ako app.py
-3. Pridaj requirements.txt
-4. Nastav GOOGLE_API_KEY v Settings → Secrets
+Usage:
+1. Create a new Space at huggingface.co/spaces
+2. Upload this file as app.py
+3. Add requirements.txt
+4. Set GOOGLE_API_KEY in Settings → Secrets
 """
 
 import gradio as gr
@@ -16,14 +16,14 @@ import os
 from typing import List, Tuple
 
 # ============================================
-# KONFIGURÁCIA
+# CONFIGURATION
 # ============================================
 
-# API Key z environment variable (nastav v HF Secrets)
+# API Key from environment variable (set in HF Secrets)
 API_KEY = os.environ.get('GOOGLE_API_KEY')
 
 if not API_KEY:
-    raise ValueError("GOOGLE_API_KEY nie je nastavený! Pridaj ho do Settings → Secrets")
+    raise ValueError("GOOGLE_API_KEY is not set! Add it in Settings → Secrets")
 
 genai.configure(api_key=API_KEY)
 
@@ -36,86 +36,86 @@ model = genai.GenerativeModel(MODEL_NAME)
 # ============================================
 
 SYSTEM_PROMPT = """
-Si priateľský AI asistent vytvorený v Kyndryl AI Academy.
+You are a friendly AI assistant created in Kyndryl AI Academy.
 
-Pravidlá:
-1. Odpovedaj stručne a jasne
-2. Ak niečo nevieš, povedz to priamo
-3. Buď nápomocný a profesionálny
-4. Používaj emoji pre lepšiu čitateľnosť
+Rules:
+1. Answer briefly and clearly
+2. If you don't know something, say so directly
+3. Be helpful and professional
+4. Use emoji for better readability
 """
 
 # ============================================
-# CHAT FUNKCIE
+# CHAT FUNCTIONS
 # ============================================
 
 def format_history(history: List[Tuple[str, str]]) -> str:
-    """Formátuje históriu konverzácie pre model."""
+    """Formats conversation history for the model."""
     formatted = SYSTEM_PROMPT + "\n\n"
     for human, ai in history:
-        formatted += f"Používateľ: {human}\n"
-        formatted += f"Asistent: {ai}\n\n"
+        formatted += f"User: {human}\n"
+        formatted += f"Assistant: {ai}\n\n"
     return formatted
 
 def chat(message: str, history: List[Tuple[str, str]]) -> str:
     """
-    Spracuje správu a vráti odpoveď.
+    Processes a message and returns a response.
     
     Args:
-        message: Aktuálna správa od používateľa
-        history: História konverzácie [(user, assistant), ...]
+        message: Current message from user
+        history: Conversation history [(user, assistant), ...]
     
     Returns:
-        Odpoveď asistenta
+        Assistant's response
     """
     try:
-        # Vytvor kontext
+        # Create context
         context = format_history(history)
-        context += f"Používateľ: {message}\nAsistent:"
+        context += f"User: {message}\nAssistant:"
         
-        # Zavolaj model
+        # Call the model
         response = model.generate_content(context)
         
         return response.text
     
     except Exception as e:
-        return f"❌ Chyba: {str(e)}\n\nSkús to znova alebo kontaktuj support."
+        return f"❌ Error: {str(e)}\n\nPlease try again or contact support."
 
 # ============================================
 # GRADIO INTERFACE
 # ============================================
 
-# Príklady otázok
+# Example questions
 EXAMPLES = [
-    "Ahoj! Kto si?",
-    "Vysvetli čo je AI agent v jednoduchých slovách",
-    "Čo je RAG a prečo je dôležitý?",
-    "Napíš jednoduchú Python funkciu na výpočet faktoriálu",
-    "Aké sú best practices pre prompt engineering?",
+    "Hi! Who are you?",
+    "Explain what an AI agent is in simple terms",
+    "What is RAG and why is it important?",
+    "Write a simple Python function to calculate factorial",
+    "What are best practices for prompt engineering?",
 ]
 
-# Vytvor interface
+# Create interface
 demo = gr.ChatInterface(
     fn=chat,
     title="🤖 AI Academy Demo Agent",
     description="""
-    **Jednoduchý AI asistent vytvorený v Kyndryl AI Academy**
+    **Simple AI assistant created in Kyndryl AI Academy**
     
-    Powered by Gemini 2.0 Flash | [GitHub](https://github.com/your-org/ai-academy-starter)
+    Powered by Gemini 2.0 Flash | [GitHub](https://github.com/lubor-fedak/AI-Academy-Knowledge)
     """,
     examples=EXAMPLES,
     theme="soft",
-    retry_btn="🔄 Skúsiť znova",
-    undo_btn="↩️ Späť",
-    clear_btn="🗑️ Vymazať",
+    retry_btn="🔄 Try again",
+    undo_btn="↩️ Undo",
+    clear_btn="🗑️ Clear",
 )
 
 # ============================================
-# SPUSTENIE
+# RUN
 # ============================================
 
 if __name__ == "__main__":
     demo.launch(
-        share=False,  # True ak chceš verejný link
+        share=False,  # True if you want a public link
         show_error=True,
     )
